@@ -1067,6 +1067,7 @@
 
 
 		<!--ADDITIONAL REFERENCE: [ Mark Russinovich intro: https://www.youtube.com/watch?v=_MUP4tgdM7s&feature=youtu.be ] -->
+		<!--ADDITIONAL REFERENCE: [ Olaf: https://medium.com/falconforce/sysmon-11-dns-improvements-and-filedelete-events-7a74f17ca842 ] -->
 
 		<!--DATA: RuleName, UtcTime, ProcessGuid, ProcessId, User, Image, TargetFilename, Hashes, IsExecutable, Archived-->
 	<RuleGroup name="" groupRelation="or">
