@@ -4,8 +4,8 @@
   Source project:	https://github.com/SwiftOnSecurity/sysmon-config
   Source license:	Creative Commons Attribution 4.0 | You may privatize, fork, edit, teach, publish, or deploy for commercial use - with attribution in the text.
 
-  Fork version:	<N/A>
-  Fork author:	<N/A>
+  Fork version:	11.0.1
+  Fork author:	Mike Pilkington
   Fork project:	<N/A>
   Fork license:	<N/A>
 
@@ -61,9 +61,10 @@
 
 -->
 
-<Sysmon schemaversion="4.22">
+<Sysmon schemaversion="4.3">
 	<!--SYSMON META CONFIG-->
 	<HashAlgorithms>md5,sha256,IMPHASH</HashAlgorithms> <!-- Both MD5 and SHA256 are the industry-standard algorithms for identifying files -->
+	<DnsLookup>False</DnsLookup>
 	<CheckRevocation/> <!-- Check loaded drivers, log if their code-signing certificate has been revoked, in case malware stole one to sign a kernel driver -->
 
 	<!-- <ImageLoad/> --> <!-- Would manually force-on ImageLoad monitoring, even without configuration below. Included only documentation. -->
@@ -1062,6 +1063,20 @@
 		</DnsQuery>
 	</RuleGroup>
 
+	<!--SYSMON EVENT ID 23 : File Deletion-->
+
+
+		<!--ADDITIONAL REFERENCE: [ Mark Russinovich intro: https://www.youtube.com/watch?v=_MUP4tgdM7s&feature=youtu.be ] -->
+
+		<!--DATA: RuleName, UtcTime, ProcessGuid, ProcessId, User, Image, TargetFilename, Hashes, IsExecutable, Archived-->
+	<RuleGroup name="" groupRelation="or">
+		<FileDelete onmatch="include">
+			<!--NOTE: Only the included directories/filenames below will be logged-->
+			<!--NOTE: If configured, deleted files will be saved to <ArchiveDirectory> location-->
+			<TargetFilename condition="begin with">c:\Windows\System32</TargetFilename>
+		</FileDelete>
+
+	</RuleGroup>
 	<!--SYSMON EVENT ID 255 : ERROR-->
 		<!--"This event is generated when an error occurred within Sysmon. They can happen if the system is under heavy load
 			and certain tasked could not be performed or a bug exists in the Sysmon service. You can report any bugs on the
